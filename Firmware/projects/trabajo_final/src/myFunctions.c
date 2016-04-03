@@ -198,14 +198,16 @@ void procesarTeclas(uint8_t teclas)
    {
 	   if(tiltFrec<1000){						// Estoy en una frecuencia valida
 		   tiltFrec+=100;
-		   if(tiltLed==EDU_CIAA_NXP_RGB_BLANCO)	// Si vengo de un error, sigo con la secuencia anterior
+		   if(tiltLed==EDU_CIAA_NXP_RGB_BLANCO){	// Si vengo de un error, sigo con la secuencia anterior
 			   tiltLed = ultimoLed;
+		   }
 	   }
 	   else{
 		   if(tiltLed != EDU_CIAA_NXP_RGB_BLANCO)	// Error! Frecuencia maxima!
 			   ultimoLed=tiltLed;				 	// Guardo el led que esta titilando
 		   tiltLed =EDU_CIAA_NXP_RGB_BLANCO;	 	// Se hace titilar blanco
 		   ciaaPOSIX_write(fd_out, &tiltLed, 1);
+		   tiltCounter=0;
 	   }
    }
 
@@ -222,6 +224,7 @@ void procesarTeclas(uint8_t teclas)
 	   			   ultimoLed=tiltLed;				 	// Guardo el led que esta titilando
 	   		   tiltLed =EDU_CIAA_NXP_RGB_BLANCO;	 	// Se hace titilar blanco
 	   		   ciaaPOSIX_write(fd_out, &tiltLed, 1);
+	   		   tiltCounter=0;
 	   	   }
    }
 

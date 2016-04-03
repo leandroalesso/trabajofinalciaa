@@ -165,6 +165,7 @@ TASK(InitTask)
    TerminateTask();
 }
 
+extern char ultimoLed;
 
 TASK(LedsTask)
 {
@@ -188,6 +189,11 @@ TASK(LedsTask)
    if (tiltCounter >= tiltFrec)
    {
       //Blink selected led!
+	  if(tiltLed==EDU_CIAA_NXP_RGB_BLANCO){
+		  outputs=0;
+		  tiltLed=ultimoLed;
+	  }
+
       outputs ^= tiltLed;
       ciaaPOSIX_write(fd_out, &outputs, 1);
 
